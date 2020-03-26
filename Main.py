@@ -9,9 +9,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QMessageBox, QInputDialog, QLineEdit ,QTreeWidget, QTreeWidgetItem, QFileSystemModel
 from PyQt5.QtCore import QDate, QTimer
 from PyQt5.QtGui import QIcon, QPixmap
-
+ 
 from uiMainWindow import Ui_MainWindow
-from uiDialogContacts import Ui_DialogCONTACT
+from uiDialogCONTACTS import Ui_DialogCONTACT
 from uiDialogABOUT import Ui_DialogABOUT
 
 list_contact={}
