@@ -11,6 +11,19 @@ from PyQt5.QtCore import QDate, QTimer
 from PyQt5.QtGui import QIcon, QPixmap
 
 from uiMainWindow import Ui_MainWindow
+from uiDialogContacts import Ui_DialogCONTACT
+from uiDialogABOUT import Ui_DialogABOUT
+
+list_contact={}
+
+def f_dialogCONTACT():
+    dialogCONTACT.ui = Ui_DialogCONTACT()
+    dialogCONTACT.ui.setupUi(dialogCONTACT)
+    dialogCONTACT.ui.contacts_list.setHeaderHidden(False)
+    dialogCONTACT.ui.contacts_list.setColumnWidth(0,200)
+    dialogCONTACT.ui.contacts_list.setColumnWidth(1,200)
+    Tab_ChargerContacts()
+    dialogCONTACT.show()
 
 def f_dialogABOUT():
     dialogABOUT.ui = Ui_DialogABOUT()
@@ -20,19 +33,54 @@ def f_dialogABOUT():
 def Menu_Bouton():
     ui.actionAbout.triggered.connect(f_dialogABOUT)
 
-def Tab_ChargerContacts():
-    pass
+def Tab_ChargerContactsClicked(it,col):
+    dialogCONTACT.close()
+    for key, value in list_contact.items():
+        for item in value:
+            if str(item['ENTREPRISE'])==str(it.text(col)):
+                ui.contacts_input_entreprise.setText(str(item['ENTREPRISE']))                
+                ui.contacts_input_contact.setText(str(item['CONTACT']))
+                ui.contacts_input_entreprise.setText(str(item['ENTREPRISE']))
+                ui.contacts_input_mail.setText(str(item['MAIL']))
+                ui.contacts_input_telephone.setText(str(item['TELEPHONE']))
+                ui.contacts_textEdit_adresse.setPlainText(str(item['ADRESSE']))
+                ui.contacts_textEdit_commentaire.setPlainText(str(item['COMMENTAIRE']))
+                ui.contacts_combobox_sexe.setCurrentIndex(int(item['SEXE']))
+                break
+    
 
-def Tab_SauvegarderContacts(pEntreprise,pSexe,pContact,pAdresse,pMail,pTelephone):
-    a_dictionary = {str(pEntreprise):[{"ENTREPRISE":str(pEntreprise),"SEXE":int(pSexe),"CONTACT":str(pContact),"ADRESSE":str(pAdresse),"MAIL":str(pMail),"TELEPHONE":str(pTelephone),}]}
+def Tab_ChargerContacts():
+    global list_contact
+    
+    dialogCONTACT.ui.contacts_list.itemClicked.connect(Tab_ChargerContactsClicked)
+    with open('./ressources/Entreprises.json') as json_file:
+        data = json.load(json_file)
+        list_contact=data
+    for key, value in data.items():
+        for item in value:
+            element=QTreeWidgetItem([str(item['ENTREPRISE']),str(item['ADRESSE'])])
+            dialogCONTACT.ui.contacts_list.addTopLevelItem(element)
+
+def Tab_SauvegarderContacts():
+    a_dictionary = {str(ui.contacts_input_entreprise.text()):[{"ENTREPRISE":str(ui.contacts_input_entreprise.text()),"SEXE":int(ui.contacts_combobox_sexe.currentIndex()),"CONTACT":str(ui.contacts_input_contact.text()),"ADRESSE":str(ui.contacts_textEdit_adresse.toPlainText()),"MAIL":str(ui.contacts_input_mail.text()),"TELEPHONE":str(ui.contacts_input_telephone.text()),"COMMENTAIRE":str(ui.contacts_textEdit_commentaire.toPlainText())}]}
     with open("./ressources/Entreprises.json", "r+") as file:
         data = json.load(file)
         data.update(a_dictionary)
         file.seek(0)
         json.dump(data, file)
+    ui.contacts_input_entreprise.setText("")                
+    ui.contacts_input_contact.setText("")
+    ui.contacts_input_entreprise.setText("")
+    ui.contacts_input_mail.setText("")
+    ui.contacts_input_telephone.setText("")
+    ui.contacts_textEdit_adresse.setPlainText("")
+    ui.contacts_textEdit_commentaire.setPlainText("")
+    ui.contacts_combobox_sexe.setCurrentIndex(0)
+    
 
 def Tab_Contacts():
-    Tab_ChargerContacts()
+    ui.contacts_btn_save.clicked.connect(Tab_SauvegarderContacts)
+    ui.contacts_btn_rechercher.clicked.connect(f_dialogCONTACT)
         
 
 if __name__ == "__main__":
@@ -46,6 +94,7 @@ if __name__ == "__main__":
 
     # - Chargement des boites de Dialogues - #
     dialogABOUT = QtWidgets.QDialog()
+    dialogCONTACT = QtWidgets.QDialog()
 
     # - Chargement des MessageBox - #
     msg = QMessageBox()
