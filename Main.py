@@ -2,6 +2,10 @@ import os
 import json
 import sys
 import shutil
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication
+from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 from fpdf import FPDF
 
@@ -17,11 +21,13 @@ from cls_Contact import cls_Contact
 from uiMainWindow import Ui_MainWindow
 from uiDialogCONTACTS import Ui_DialogCONTACT
 from uiDialogABOUT import Ui_DialogABOUT
+from email.encoders import encode_base64
 
 G_CV=""
 G_LM=""
 G_Formation=""
 list_contact={}
+list_Dialogue=[]
 
 def f_dialogCONTACT():
     dialogCONTACT.ui = Ui_DialogCONTACT()
@@ -45,50 +51,97 @@ def Tab_Envoyer_Envoyer():
     global G_LM
     global G_Formation
     
-    ui.envoyer_label_pdf.setText("ENVOYER")
-    
-    if ui.envoyer_checkBox_cv.isChecked():
-        G_CV=".\\ressources\\CV_CSIA.pdf"
-    if ui.envoyer_checkBox_lm.isChecked():
-        G_LM=".\\ressources\\LM_CSIA.pdf"
-        GenPDF(G_LM,ui.contacts_input_entreprise.text(),ui.contacts_input_contact.text(),ui.contacts_textEdit_adresse.toPlainText(),ui.contacts_combobox_sexe.currentIndex())
-    if ui.envoyer_checkBox_formation.isChecked():
-        G_Formation=".\\ressources\\FORMATION_CSIA.pdf"
+    for item in list_Dialogue:
+        for value in list_contact:
+            if str(item) == str(value) and list_contact[value].c_mail != "":
+                                                
+                if int(list_contact[value].c_sexe)==0:
+                    strSEXE="Madame"
+                elif int(list_contact[value].c_sexe)==1:
+                    strSEXE="Monsieur"    
+                message = MIMEMultipart()
+                body = """Bonjour """+ str(strSEXE) + """ """ + list_contact[value].c_contact + """,\n\nJe viens vous transmettre ma candidature pour un contrat d'alternance en informatique sur une formation BAC+3 CSIA avec l’IUMM LOIRE \n\nVeuillez trouver ci-joint : \n• Ma lettre de Motivation \n• Mon Curriculum Vitae \n• Le plan de formation CSIA (Charge de projets en Systèmes informatiques Appliqués) \n\n Je souhaite vivement vous rencontrer afin d'exposer et d’échanger sur mon projet professionnel.\n\n Dans l'attente d'un avis favorable à ma candidature, je reste à votre disposition. \n Cordialement, \n\n Monsieur Lavigne Angel \n 06.84.83.60.95 \n angel.lavigne@outlook.fr"""
+                message['Subject'] = "Candidature spontanée pour un contrat d’alternance BAC+3 CSIA Charge de projets en Systèmes Informatiques Appliqués"
+
+                message['From'] = 'angel.lavigne@outlook.fr'
+                message['To'] = 'angel.lavigne@outlook.fr'
+                message.attach(MIMEText(body))
+                              
+                if ui.envoyer_checkBox_lm.isChecked():
+                    G_LM=".\\ressources\\LM_CSIA.pdf"
+                    GenPDF(G_LM,str(list_contact[value].c_entreprise),str(list_contact[value].c_contact),str(list_contact[value].c_adresse),int(list_contact[value].c_sexe))
+                    
+                    with open(G_LM, "rb") as opened:
+                        openedfile = opened.read()
+                    attachedfile = MIMEApplication(openedfile, _subtype = "pdf", _encoder = encode_base64)
+                    attachedfile.add_header('content-disposition', 'attachment', filename = "LM_CSIA.pdf")
+                    message.attach(attachedfile)
+                    
+                    
+                if ui.envoyer_checkBox_formation.isChecked():
+                    G_Formation=".\\ressources\\FORMATION_CSIA.pdf"
+                    
+                    with open(G_Formation, "rb") as opened:
+                        openedfile = opened.read()
+                    attachedfile = MIMEApplication(openedfile, _subtype = "pdf", _encoder = encode_base64)
+                    attachedfile.add_header('content-disposition', 'attachment', filename = "FORMATION_CSIA.pdf")
+                    message.attach(attachedfile)
+                    
+                if ui.envoyer_checkBox_cv.isChecked():
+                    G_CV=".\\ressources\\CV_CSIA.pdf"
+                    with open(G_CV, "rb") as opened:
+                        openedfile = opened.read()
+                    attachedfile = MIMEApplication(openedfile, _subtype = "pdf", _encoder = encode_base64)
+                    attachedfile.add_header('content-disposition', 'attachment', filename = "CV_CSIA.pdf")
+                    message.attach(attachedfile)
+
+                server = smtplib.SMTP('SMTP.office365.com:587')
+                server.starttls()
+                server.login('angel.lavigne@outlook.fr','Lopomlopom44044++')
+                server.send_message(message)
+                server.quit()
+                
 
 def Tab_Envoyer_Visualiser():
     global G_CV
     global G_LM
     global G_Formation
     
-    if ui.envoyer_checkBox_cv.isChecked():
-        G_CV=".\\ressources\\CV_CSIA.pdf"
-    if ui.envoyer_checkBox_lm.isChecked():
-        G_LM=".\\ressources\\LM_CSIA.pdf"
-        GenPDF(G_LM,ui.contacts_input_entreprise.text(),ui.contacts_input_contact.text(),ui.contacts_textEdit_adresse.toPlainText(),ui.contacts_combobox_sexe.currentIndex())
-    if ui.envoyer_checkBox_formation.isChecked():
-        G_Formation=".\\ressources\\FORMATION_CSIA.pdf"
-    
-    select=dialogCONTACT.ui.contacts_list
-        
-    ui.envoyer_label_pdf.setText("VISUALISER")
+    for item in list_Dialogue:
+        for value in list_contact:
+            if str(item) == str(value):              
+                if ui.envoyer_checkBox_lm.isChecked():
+                    G_LM=".\\ressources\\LM_CSIA.pdf"
+                    GenPDF(G_LM,str(list_contact[value].c_entreprise),str(list_contact[value].c_contact),str(list_contact[value].c_adresse),int(list_contact[value].c_sexe))
+                    break
+        if ui.envoyer_checkBox_formation.isChecked():
+            G_Formation=".\\ressources\\FORMATION_CSIA.pdf"
+        if ui.envoyer_checkBox_cv.isChecked():
+            G_CV=".\\ressources\\CV_CSIA.pdf"
 
 def Tab_Envoyer():
     ui.envoyer_btn_selectionner.clicked.connect(f_dialogCONTACT)
     ui.envoyer_btn_visualiser.clicked.connect(Tab_Envoyer_Visualiser)
     ui.envoyer_btn_envoyer.clicked.connect(Tab_Envoyer_Envoyer)
 
-def Tab_ChargerContactsClicked(it,col):
+def Tab_ChargerContactsClickedItems():
+    global list_Dialogue
+    select=dialogCONTACT.ui.contacts_list.selectedIndexes()
+    
     dialogCONTACT.close()
-    for value in list_contact:
-        if str(value) == str(it.text(col)):
-            ui.contacts_input_entreprise.setText(str(list_contact[value].c_entreprise))
-            ui.contacts_combobox_sexe.setCurrentIndex(int(list_contact[value].c_sexe))                
-            ui.contacts_input_contact.setText(str(list_contact[value].c_contact))
-            ui.contacts_input_mail.setText(str(list_contact[value].c_mail))
-            ui.contacts_input_telephone.setText(str(list_contact[value].c_telephone))
-            ui.contacts_textEdit_adresse.setPlainText(str(list_contact[value].c_adresse))
-            ui.contacts_textEdit_commentaire.setPlainText(str(list_contact[value].c_commentaire))
-            break
+
+def Tab_ChargerContactsClicked():
+    global list_Dialogue
+    
+    ui.envoyer_list.clear()
+    for item in dialogCONTACT.ui.contacts_list.selectedIndexes():
+        for value in list_contact:
+            if str(value) == str(item.data()) and str(list_contact[value].c_mail)!="":
+                list_Dialogue.append(str(list_contact[value].c_entreprise))
+                ui.envoyer_list.addTopLevelItem(QTreeWidgetItem([str(list_contact[value].c_entreprise),str(list_contact[value].c_mail)]))
+                break
+    dialogCONTACT.close()
+
     
 def Tab_ChargerList():
     global list_contact
@@ -100,10 +153,12 @@ def Tab_ChargerList():
             list_contact[str(item['ENTREPRISE'])]=cls_Contact(str(item['ENTREPRISE']),int(item['SEXE']),str(item['CONTACT']),str(item['ADRESSE']),str(item['MAIL']),str(item['TELEPHONE']),str(item['COMMENTAIRE']))
     return list_contact
 
+
 def Tab_ChargerContacts():
     global list_contact
     
-    dialogCONTACT.ui.contacts_list.itemClicked.connect(Tab_ChargerContactsClicked)
+    # dialogCONTACT.ui.contacts_list.itemClicked.connect(Tab_ChargerContactsClicked)
+    dialogCONTACT.ui.contacts_btn_selectionner.clicked.connect(Tab_ChargerContactsClicked)
     
     for value in list_contact:
         ui.contacts_input_entreprise.setText(str(list_contact[value].c_entreprise))

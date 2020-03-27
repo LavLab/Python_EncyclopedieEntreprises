@@ -66,4 +66,4 @@ class GenPDF():
 
         pdf.cell(0, 6, txt="Lavigne Angel", ln=1, align="R")
 
-        pdf.output("pPath.pdf")
+        pdf.output(pPath)
