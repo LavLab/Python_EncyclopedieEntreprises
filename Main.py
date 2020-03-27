@@ -61,9 +61,9 @@ def Tab_Envoyer_Visualiser():
         G_LM=".\\ressources\\LM_CSIA.pdf"
     if ui.envoyer_checkBox_formation.isChecked():
         G_Formation=".\\ressources\\FORMATION_CSIA.pdf"
-    
-    
-
+        
+    ## TODO
+        
     ui.envoyer_label_pdf.setText("VISUALISER")
 
 def Tab_Envoyer():
