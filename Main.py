@@ -58,14 +58,18 @@ def Tab_Envoyer_Envoyer():
                 if int(list_contact[value].c_sexe)==0:
                     strSEXE="Madame"
                 elif int(list_contact[value].c_sexe)==1:
-                    strSEXE="Monsieur"    
+                    strSEXE="Monsieur" 
+                    
+                join="" 
+                    
                 message = MIMEMultipart()
-                body = """Bonjour """+ str(strSEXE) + """ """ + list_contact[value].c_contact + """,\n\nJe viens vous transmettre ma candidature pour un contrat d'alternance en informatique sur une formation BAC+3 CSIA avec l’IUMM LOIRE \n\nVeuillez trouver ci-joint : \n• Ma lettre de Motivation \n• Mon Curriculum Vitae \n• Le plan de formation CSIA (Charge de projets en Systèmes informatiques Appliqués) \n\n Je souhaite vivement vous rencontrer afin d'exposer et d’échanger sur mon projet professionnel.\n\n Dans l'attente d'un avis favorable à ma candidature, je reste à votre disposition. \n Cordialement, \n\n Monsieur Lavigne Angel \n 06.84.83.60.95 \n angel.lavigne@outlook.fr"""
                 message['Subject'] = "Candidature spontanée pour un contrat d’alternance BAC+3 CSIA Charge de projets en Systèmes Informatiques Appliqués"
-
                 message['From'] = 'angel.lavigne@outlook.fr'
-                message['To'] = 'angel.lavigne@outlook.fr'
-                message.attach(MIMEText(body))
+                
+                if ui.envoyer_checkBox_tester.isChecked():
+                    message['To'] = 'angel.lavigne@outlook.fr'
+                else:
+                    message['To'] = 'angel.lavigne@outlook.fr'
                               
                 if ui.envoyer_checkBox_lm.isChecked():
                     G_LM=".\\ressources\\LM_CSIA.pdf"
@@ -76,7 +80,16 @@ def Tab_Envoyer_Envoyer():
                     attachedfile = MIMEApplication(openedfile, _subtype = "pdf", _encoder = encode_base64)
                     attachedfile.add_header('content-disposition', 'attachment', filename = "LM_CSIA.pdf")
                     message.attach(attachedfile)
+                    join="\n• Ma lettre de Motivation"
                     
+                if ui.envoyer_checkBox_cv.isChecked():
+                    G_CV=".\\ressources\\CV_CSIA.pdf"
+                    with open(G_CV, "rb") as opened:
+                        openedfile = opened.read()
+                    attachedfile = MIMEApplication(openedfile, _subtype = "pdf", _encoder = encode_base64)
+                    attachedfile.add_header('content-disposition', 'attachment', filename = "CV_CSIA.pdf")
+                    message.attach(attachedfile)
+                    join+="\n• Mon Curriculum Vitae"
                     
                 if ui.envoyer_checkBox_formation.isChecked():
                     G_Formation=".\\ressources\\FORMATION_CSIA.pdf"
@@ -86,15 +99,12 @@ def Tab_Envoyer_Envoyer():
                     attachedfile = MIMEApplication(openedfile, _subtype = "pdf", _encoder = encode_base64)
                     attachedfile.add_header('content-disposition', 'attachment', filename = "FORMATION_CSIA.pdf")
                     message.attach(attachedfile)
+                    join+="\n• Le plan de formation CSIA (Charge de projets en Systèmes informatiques Appliqués)"
                     
-                if ui.envoyer_checkBox_cv.isChecked():
-                    G_CV=".\\ressources\\CV_CSIA.pdf"
-                    with open(G_CV, "rb") as opened:
-                        openedfile = opened.read()
-                    attachedfile = MIMEApplication(openedfile, _subtype = "pdf", _encoder = encode_base64)
-                    attachedfile.add_header('content-disposition', 'attachment', filename = "CV_CSIA.pdf")
-                    message.attach(attachedfile)
-
+                    
+                body = """Bonjour """+ str(strSEXE) + """ """ + list_contact[value].c_contact + """,\n\nJe viens vous transmettre ma candidature pour un contrat d'alternance en informatique sur une formation BAC+3 CSIA avec l’IUMM LOIRE \n\nVeuillez trouver ci-joint :"""+str(join)+""" \n\n Je souhaite vivement vous rencontrer afin d'exposer et d’échanger sur mon projet professionnel.\n\n Dans l'attente d'un avis favorable à ma candidature, je reste à votre disposition. \n Cordialement, \n\n Monsieur Lavigne Angel \n 06.84.83.60.95 \n angel.lavigne@outlook.fr"""
+                message.attach(MIMEText(body))
+                
                 server = smtplib.SMTP('SMTP.office365.com:587')
                 server.starttls()
                 server.login('angel.lavigne@outlook.fr','Lopomlopom44044++')
