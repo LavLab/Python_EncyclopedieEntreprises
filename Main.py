@@ -3,6 +3,7 @@ import json
 import sys
 import shutil
 from datetime import datetime
+from PyPDF2 import PdfFileWriter, PdfFileReader
 
 from PyQt5 import uic
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -14,6 +15,9 @@ from uiMainWindow import Ui_MainWindow
 from uiDialogCONTACTS import Ui_DialogCONTACT
 from uiDialogABOUT import Ui_DialogABOUT
 
+G_CV=""
+G_LM=""
+G_Formation=""
 list_contact={}
 
 def f_dialogCONTACT():
@@ -32,6 +36,43 @@ def f_dialogABOUT():
 
 def Menu_Bouton():
     ui.actionAbout.triggered.connect(f_dialogABOUT)
+
+def Tab_Envoyer_Envoyer():
+    global G_CV
+    global G_LM
+    global G_Formation
+    
+    ui.envoyer_label_pdf.setText("ENVOYER")
+    if ui.envoyer_checkBox_cv.isChecked():
+        G_CV=".\\ressources\\CV_CSIA.pdf"
+    if ui.envoyer_checkBox_lm.isChecked():
+        G_LM=".\\ressources\\LM_CSIA.pdf"
+    if ui.envoyer_checkBox_formation.isChecked():
+        G_Formation=".\\ressources\\FORMATION_CSIA.pdf"
+
+def Tab_Envoyer_Visualiser():
+    global G_CV
+    global G_LM
+    global G_Formation
+    
+    if ui.envoyer_checkBox_cv.isChecked():
+        G_CV=".\\ressources\\CV_CSIA.pdf"
+    if ui.envoyer_checkBox_lm.isChecked():
+        G_LM=".\\ressources\\LM_CSIA.pdf"
+    if ui.envoyer_checkBox_formation.isChecked():
+        G_Formation=".\\ressources\\FORMATION_CSIA.pdf"
+    
+    
+
+    ui.envoyer_label_pdf.setText("VISUALISER")
+
+def Tab_Envoyer():
+    ui.envoyer_btn_selectionner.clicked.connect(f_dialogCONTACT)
+    ui.envoyer_btn_visualiser.clicked.connect(Tab_Envoyer_Visualiser)
+    ui.envoyer_btn_envoyer.clicked.connect(Tab_Envoyer_Envoyer)
+
+
+
 
 def Tab_ChargerContactsClicked(it,col):
     dialogCONTACT.close()
@@ -105,6 +146,9 @@ if __name__ == "__main__":
 
     # - Menu_Bouton - #
     Menu_Bouton()
+    
+    # - Tab_Envoyer - #
+    Tab_Envoyer()
     
     # - Tab_Contacts - #
     Tab_Contacts()

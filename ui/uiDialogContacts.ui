@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>515</width>
-    <height>456</height>
+    <height>458</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <x>10</x>
      <y>10</y>
      <width>491</width>
-     <height>441</height>
+     <height>401</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -40,6 +40,9 @@
    <property name="alternatingRowColors">
     <bool>true</bool>
    </property>
+   <property name="selectionMode">
+    <enum>QAbstractItemView::MultiSelection</enum>
+   </property>
    <property name="uniformRowHeights">
     <bool>false</bool>
    </property>
@@ -56,6 +59,27 @@
      <string>ADRESSE</string>
     </property>
    </column>
+  </widget>
+  <widget class="QPushButton" name="contacts_btn_selectionner">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>420</y>
+     <width>491</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Century Gothic</family>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>SELECTIONNER</string>
+   </property>
   </widget>
  </widget>
  <resources/>

@@ -22,6 +22,7 @@ class Ui_DialogCONTACT(object):
         self.contacts_list.setMidLineWidth(0)
         self.contacts_list.setProperty("showDropIndicator", False)
         self.contacts_list.setAlternatingRowColors(True)
+        self.contacts_list.setSelectionMode(QtWidgets.QAbstractItemView.MultiSelection)
         self.contacts_list.setUniformRowHeights(False)
         self.contacts_list.setAnimated(True)
         self.contacts_list.setObjectName("contacts_list")

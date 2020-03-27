@@ -131,52 +131,78 @@
        <string>SELECTIONNER</string>
       </property>
      </widget>
-     <widget class="QCheckBox" name="checkBox">
+     <widget class="QCheckBox" name="envoyer_checkBox_cv">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>70</y>
+        <x>20</x>
+        <y>60</y>
         <width>191</width>
-        <height>21</height>
+        <height>31</height>
        </rect>
       </property>
       <property name="text">
        <string>CURRICULUM VITAE</string>
       </property>
      </widget>
-     <widget class="QCheckBox" name="checkBox_2">
+     <widget class="QCheckBox" name="envoyer_checkBox_lm">
       <property name="geometry">
        <rect>
-        <x>30</x>
+        <x>20</x>
         <y>100</y>
-        <width>171</width>
-        <height>21</height>
+        <width>191</width>
+        <height>31</height>
        </rect>
       </property>
       <property name="text">
        <string>LETTRE MOTIVATION</string>
       </property>
      </widget>
-     <widget class="QCheckBox" name="checkBox_3">
+     <widget class="QCheckBox" name="envoyer_checkBox_formation">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>130</y>
+        <x>20</x>
+        <y>140</y>
         <width>191</width>
-        <height>21</height>
+        <height>31</height>
        </rect>
       </property>
       <property name="text">
        <string>FEUILLET FORMATION</string>
       </property>
      </widget>
-     <widget class="QFrame" name="frame">
+     <widget class="QPushButton" name="envoyer_btn_visualiser">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>60</y>
-        <width>201</width>
-        <height>101</height>
+        <x>10</x>
+        <y>190</y>
+        <width>191</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>VISUALISER</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="envoyer_btn_envoyer">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>370</y>
+        <width>191</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>ENVOYER</string>
+      </property>
+     </widget>
+     <widget class="QTreeWidget" name="envoyer_list">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>50</y>
+        <width>281</width>
+        <height>351</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -187,6 +213,38 @@
       </property>
       <property name="lineWidth">
        <number>2</number>
+      </property>
+      <column>
+       <property name="text">
+        <string>ENTREPRISE</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>MAIL</string>
+       </property>
+      </column>
+     </widget>
+     <widget class="QLabel" name="envoyer_label_pdf">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>230</y>
+        <width>171</width>
+        <height>131</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Box</enum>
+      </property>
+      <property name="lineWidth">
+       <number>2</number>
+      </property>
+      <property name="text">
+       <string>PDF</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </widget>
