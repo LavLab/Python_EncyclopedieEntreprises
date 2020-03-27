@@ -28,7 +28,7 @@ class GenPDF():
         pdf.ln()
         pdf.ln()
 
-        pdf.cell(0, 6, txt="Saint-Etienne,"+datetime.datetime.now().strftime("%d/%m/%Y")+"", ln=1, align="R")
+        pdf.cell(0, 6, txt="Saint-Etienne, "+datetime.datetime.now().strftime("%d/%m/%Y")+"", ln=1, align="R")
 
         pdf.set_font("Arial",style="B", size=12)
 
