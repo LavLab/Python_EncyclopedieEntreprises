@@ -119,15 +119,11 @@ def Tab_Envoyer_Visualiser():
     
     for item in list_Dialogue:
         for value in list_contact:
-            if str(item) == str(value):              
-                if ui.envoyer_checkBox_lm.isChecked():
-                    G_LM=".\\ressources\\LM_CSIA.pdf"
-                    GenPDF(G_LM,str(list_contact[value].c_entreprise),str(list_contact[value].c_contact),str(list_contact[value].c_adresse),int(list_contact[value].c_sexe))
-                    break
-        if ui.envoyer_checkBox_formation.isChecked():
-            G_Formation=".\\ressources\\FORMATION_CSIA.pdf"
-        if ui.envoyer_checkBox_cv.isChecked():
-            G_CV=".\\ressources\\CV_CSIA.pdf"
+            if str(item) == str(value):
+                print(list_contact[value])            
+                G_LM=".\\ressources\\LM_CSIA.pdf"
+                # GenPDF(G_LM,)
+
 
 def Tab_Envoyer():
     ui.envoyer_btn_selectionner.clicked.connect(f_dialogCONTACT)

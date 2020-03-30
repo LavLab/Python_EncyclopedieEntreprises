@@ -1,1 +1,22 @@
-{"PERSO":[{"AUTHEUR":"LAVIGNE Angel","ADRESSE":"1 Rue du Grand Gonnet\n42000 Saint-Etienne","TELEPHONE":"06.84.83.60.95","EMAIL":"angel.lavigne@outlook.fr"}],"LM":[{"LIEUX":"","OBJET":"","P1":"","P2":"","P3":"","P4":"","P5":""}],"MAIL":[{""}]}
+{
+    "PERSO":[
+        {
+            "AUTHEUR":"LAVIGNE Angel",
+            "ADRESSE":"1 Rue du Grand Gonnet\n42000 Saint-Etienne",
+            "TELEPHONE":"06.84.83.60.95",
+            "EMAIL":"angel.lavigne@outlook.fr"
+        }
+    ],
+    "LM":[
+        {
+            "LIEUX":"SAINT-ETIENNE",
+            "OBJET":"Candidature spontanée pour un contrat d'alternance BAC+3 CSIA Charge de projets en Systèmes Informatiques Appliqués",
+            "CONTENU":"Actuellement alternant sur un BTS SIO (Services Informatiques aux Organisations) en deuxième année option SLAM (Solutions Logicielles et Applications Métiers). \n\nJe souhaite intégrer dès la rentrée de septembre 2020 la Formation BAC+3 CSIA en Alternance chez vous a l'IUMM Loire de Saint'Etienne et par la suite valider le niveau un BAC+5. \n\nJe possède de bonne base de connaissance dans plusieurs langages tant dans le WEB que dans les applicatifs lourds tel que la programmation en C#.NET ou ASP.NET mais aussi en Python. \n\nMa motivation pour les sciences numériques et l'informatique, la sécurité des données la mise en place d'un plan d'action et la réalisation de projet font qu'aujourd'hui je souhaite intégrer votre entreprise pour apprendre au contact du marché du travail et m'intégrer dans votre équipe afin de valider mes compétences par les diplômes. \n\nMotivé, dynamique et passionné je suis mobile pour échanger avec vous, et le Responsable Technique de votre entreprise, afin de vous exposer mes projets professionnels."
+        }
+    ],
+    "MAIL":[
+        {
+            "":""
+        }
+    ]
+}
