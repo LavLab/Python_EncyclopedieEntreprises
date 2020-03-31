@@ -15,7 +15,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QMessageBox, QInputDi
 from PyQt5.QtCore import QDate, QTimer
 from PyQt5.QtGui import QIcon, QPixmap
 
-from GenPDF import GenPDF
+from cls_PDF import cls_PDF
 from cls_Contact import cls_Contact
 
 from uiMainWindow import Ui_MainWindow
