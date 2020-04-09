@@ -170,19 +170,6 @@
        <string>FEUILLET FORMATION</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="envoyer_btn_visualiser">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>200</y>
-        <width>191</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>PRE-VISUALISER</string>
-      </property>
-     </widget>
      <widget class="QPushButton" name="envoyer_btn_envoyer">
       <property name="geometry">
        <rect>
@@ -221,7 +208,12 @@
       </column>
       <column>
        <property name="text">
-        <string>MAIL</string>
+        <string>ENVOI</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>REPONSE</string>
        </property>
       </column>
      </widget>
@@ -229,7 +221,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>240</y>
+        <y>340</y>
         <width>181</width>
         <height>31</height>
        </rect>
@@ -238,20 +230,17 @@
        <string>TESTER</string>
       </property>
      </widget>
-     <widget class="QLabel" name="contacts_label_entreprise_2">
+     <widget class="QPushButton" name="envoyer_btn_effacer">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>180</y>
-        <width>191</width>
+        <x>480</x>
+        <y>50</y>
+        <width>21</width>
         <height>21</height>
        </rect>
       </property>
       <property name="text">
-       <string>LETTRE DE MOTIVATION</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
+       <string>X</string>
       </property>
      </widget>
     </widget>
@@ -393,39 +382,13 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>372</y>
-        <width>491</width>
+        <y>370</y>
+        <width>231</width>
         <height>31</height>
        </rect>
       </property>
       <property name="text">
        <string>SAUVEGARDER</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="contacts_label_commentaire">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>230</y>
-        <width>121</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>COMMENTAIRE</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QPlainTextEdit" name="contacts_textEdit_commentaire">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>250</y>
-        <width>491</width>
-        <height>111</height>
-       </rect>
       </property>
      </widget>
      <widget class="QComboBox" name="contacts_combobox_sexe">
@@ -458,7 +421,7 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>491</width>
+        <width>231</width>
         <height>31</height>
        </rect>
       </property>
@@ -466,6 +429,185 @@
        <string>RECHERCHER</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="contacts_btn_effacer">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>370</y>
+        <width>231</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>EFFACER</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="contacts_btn_supprimer">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>10</y>
+        <width>231</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>SUPPRIMER</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="contacts_label_dernier_envoi">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>230</y>
+        <width>231</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>DERNIER ENVOI</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="contacts_input_dernier_envoi">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>250</y>
+        <width>231</width>
+        <height>31</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="contacts_checkBox_a_verifier">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>230</y>
+        <width>211</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string> VERIFIER INFORMATIONS</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="contacts_checkBox_reponse_negative">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>270</y>
+        <width>171</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>REPONSE NEGATIVE</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="contacts_input_dernier_envoi_2">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>320</y>
+        <width>231</width>
+        <height>31</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="contacts_label_dernier_envoi_2">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>300</y>
+        <width>231</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>DERNIERE REPONSE</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="contacts_checkBox_reponse_positive">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>290</y>
+        <width>171</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>REPONSE POSITIVE</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="contacts_btn_visualise_reponse">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>320</y>
+        <width>211</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>VISUALISER</string>
+      </property>
+     </widget>
+     <widget class="QFrame" name="frame">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>270</y>
+        <width>231</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Box</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="lineWidth">
+       <number>2</number>
+      </property>
+     </widget>
+     <zorder>frame</zorder>
+     <zorder>contacts_input_entreprise</zorder>
+     <zorder>contacts_input_contact</zorder>
+     <zorder>contacts_input_telephone</zorder>
+     <zorder>contacts_input_mail</zorder>
+     <zorder>contacts_label_entreprise</zorder>
+     <zorder>contacts_label_contact</zorder>
+     <zorder>contacts_label_telephone</zorder>
+     <zorder>contacts_label_adresse</zorder>
+     <zorder>contacts_label_mail</zorder>
+     <zorder>contacts_textEdit_adresse</zorder>
+     <zorder>contacts_btn_save</zorder>
+     <zorder>contacts_combobox_sexe</zorder>
+     <zorder>contacts_btn_rechercher</zorder>
+     <zorder>contacts_btn_effacer</zorder>
+     <zorder>contacts_btn_supprimer</zorder>
+     <zorder>contacts_label_dernier_envoi</zorder>
+     <zorder>contacts_input_dernier_envoi</zorder>
+     <zorder>contacts_checkBox_a_verifier</zorder>
+     <zorder>contacts_checkBox_reponse_negative</zorder>
+     <zorder>contacts_input_dernier_envoi_2</zorder>
+     <zorder>contacts_label_dernier_envoi_2</zorder>
+     <zorder>contacts_checkBox_reponse_positive</zorder>
+     <zorder>contacts_btn_visualise_reponse</zorder>
     </widget>
    </widget>
   </widget>
