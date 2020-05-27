@@ -44,7 +44,7 @@ class GenPDF():
         pdf.ln()
 
         pdf.set_font("Arial", size=13)
-        pdf.cell(0, 6, txt=strSEXE+",", ln=1, align="L")
+        pdf.cell(0, 6, txt=strSEXE+" "+pContact+",", ln=1, align="L")
 
         pdf.ln()
         # pdf.multi_cell(0, 6, txt="".encode('latin-1', 'replace').decode('latin-1'), align="L")

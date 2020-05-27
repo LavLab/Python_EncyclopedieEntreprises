@@ -216,6 +216,11 @@
         <string>REPONSE</string>
        </property>
       </column>
+      <column>
+       <property name="text">
+        <string>P</string>
+       </property>
+      </column>
      </widget>
      <widget class="QCheckBox" name="envoyer_checkBox_tester">
       <property name="geometry">

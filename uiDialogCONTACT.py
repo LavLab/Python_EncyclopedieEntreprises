@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '.\ui\uiDialogCONTACT.ui'
 #
-# Created by: PyQt5 UI code generator 5.14.1
+# Created by: PyQt5 UI code generator 5.14.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -10,7 +10,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_DialogCONTACT(object):
+class UiD_uiDialogCONTACT(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(515, 458)

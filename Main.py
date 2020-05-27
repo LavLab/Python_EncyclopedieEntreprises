@@ -18,9 +18,9 @@ from PyQt5.QtGui import QIcon, QPixmap
 from GenPDF import GenPDF
 from cls_Contact import cls_Contact
 
-from uiMainWindow import Ui_MainWindow
-from uiDialogCONTACT import Ui_DialogCONTACT
-from uiDialogABOUT import Ui_DialogABOUT
+from uiMainWindow import Ui_uiMainWindow
+from uiDialogCONTACT import UiD_uiDialogCONTACT
+from uiDialogABOUT import UiD_uiDialogABOUT
 from email.encoders import encode_base64
 
 G_CV=""
@@ -30,7 +30,7 @@ list_contact={}
 list_Dialogue=[]
 
 def f_dialogCONTACT():
-    dialogCONTACT.ui = Ui_DialogCONTACT()
+    dialogCONTACT.ui = UiD_uiDialogCONTACT()
     dialogCONTACT.ui.setupUi(dialogCONTACT)
     dialogCONTACT.ui.contacts_list.setHeaderHidden(False)
     dialogCONTACT.ui.contacts_list.setColumnWidth(0,200)
@@ -39,7 +39,7 @@ def f_dialogCONTACT():
     dialogCONTACT.show()
 
 def f_dialogABOUT():
-    dialogABOUT.ui = Ui_DialogABOUT()
+    dialogABOUT.ui = UiD_uiDialogABOUT()
     dialogABOUT.ui.setupUi(dialogABOUT)
     dialogABOUT.show()
 
@@ -152,9 +152,32 @@ def Tab_ChargerContactsClicked():
                 ui.contacts_input_mail.setText(str(list_contact[value].c_mail))
                 ui.contacts_input_telephone.setText(str(list_contact[value].c_telephone))
                 ui.contacts_textEdit_adresse.setPlainText(str(list_contact[value].c_adresse))
-                ui.contacts_textEdit_commentaire.setPlainText(str(list_contact[value].c_commentaire))
-                ui.contacts_input_dernier_envoi.setText(list_contact[value].c_dernier_envoi)
-    
+                ui.contacts_input_dernier_envoi.setText(str(list_contact[value].c_dernier_envoi))
+                
+                if(str(list_contact[value].c_derniere_reponse)=="PAS DE REPONSE"):
+                    ui.contacts_checkBox_reponse_positive.setEnabled(False)
+                    ui.contacts_checkBox_reponse_negative.setEnabled(False)
+                    ui.contacts_btn_visualise_reponse.setEnabled(False)
+                else:
+                    ui.contacts_checkBox_reponse_positive.setEnabled(True)
+                    ui.contacts_checkBox_reponse_negative.setEnabled(True)
+                    ui.contacts_btn_visualise_reponse.setEnabled(True)
+                    
+                ui.contacts_input_dernier_envoi_2.setText(str(list_contact[value].c_derniere_reponse))
+                
+                if(int(list_contact[value].c_verifier)==1):
+                    ui.contacts_checkBox_a_verifier.setChecked(True)
+                if(int(list_contact[value].c_reponse_positive)==1):
+                    ui.contacts_checkBox_reponse_positive.setChecked(True)
+                if(int(list_contact[value].c_reponse_negative)==1):
+                    ui.contacts_checkBox_reponse_negative.setChecked(True)
+                
+                if (int(list_contact[value].c_reponse_positive)==1 and int(list_contact[value].c_reponse_negative)==1):
+                    ui.contacts_btn_visualise_reponse.setText("EN ATTENTE")
+                else:
+                    ui.contacts_btn_visualise_reponse.setText("RAS")
+                    
+                    
     for item in dialogCONTACT.ui.contacts_list.selectedIndexes():
         for value in list_contact:
             if str(value) == str(item.data()) and str(list_contact[value].c_mail)!="":
@@ -174,7 +197,7 @@ def Tab_ChargerList():
         data = json.load(json_file)
     for key, value in data.items():
         for item in value:
-            list_contact[str(item['ENTREPRISE'])]=cls_Contact(str(item['ENTREPRISE']),int(item['SEXE']),str(item['CONTACT']),str(item['ADRESSE']),str(item['MAIL']),str(item['TELEPHONE']),str(item['COMMENTAIRE']),str(item['DERNIER_ENVOI']))
+            list_contact[str(item['ENTREPRISE'])]=cls_Contact(str(item['ENTREPRISE']),int(item['SEXE']),str(item['CONTACT']),str(item['ADRESSE']),str(item['MAIL']),str(item['TELEPHONE']),str(item['DERNIER_ENVOI']),int(item['VERIFIER']),int(item['REPONSE_POSITIVE']),int(item['REPONSE_NEGATIVE']),str(item['DERNIERE_REPONSE']))
     return list_contact
 
 
@@ -183,11 +206,20 @@ def Tab_ChargerContacts():
     dialogCONTACT.ui.contacts_btn_selectionner.clicked.connect(Tab_ChargerContactsClicked)
                                      
     for value in list_contact:
-        dialogCONTACT.ui.contacts_list.addTopLevelItem(QTreeWidgetItem([str(list_contact[value].c_entreprise),str(list_contact[value].c_adresse)]))
+        dialogCONTACT.ui.contacts_list.addTopLevelItem(QTreeWidgetItem([str(list_contact[value].c_entreprise),str(list_contact[value].c_adresse),str(list_contact[value].c_contact)]))
         dialogCONTACT.setWindowTitle("Liste des Contacts : "+str(len(list_contact)))
         
 def Tab_SauvegarderContacts():
     global list_contact
+    
+    if(ui.contacts_checkBox_reponse_positive.isChecked()):
+        rpp=1
+    else:
+        rpp=0
+    if(ui.contacts_checkBox_reponse_negative.isChecked()):
+        rpn=1
+    else:
+        rpn=0
     
     a_dictionary = {
         str(ui.contacts_input_entreprise.text()):[
@@ -198,7 +230,11 @@ def Tab_SauvegarderContacts():
              "MAIL":str(ui.contacts_input_mail.text()),
              "TELEPHONE":str(ui.contacts_input_telephone.text()),
              "COMMENTAIRE":str(ui.contacts_textEdit_commentaire.toPlainText()),
-             "DERNIER_ENVOI":str(ui.contacts_input_dernier_envoi.text())
+             "DERNIER_ENVOI":str(ui.contacts_input_dernier_envoi.text()),
+             "VERIFIER":int(ui.contacts_input_dernier_envoi.text()),
+             "REPONSE_POSITIVE":int(rpp),
+             "REPONSE_NEGATIVE":int(rpn),
+             "DERNIERE_REPONSE":str(ui.contacts_input_dernier_envoi_2.text())
             }
         ]
     }
@@ -219,8 +255,13 @@ def Tab_ContactEffacer():
     ui.contacts_input_mail.setText("")
     ui.contacts_input_telephone.setText("")
     ui.contacts_textEdit_adresse.setPlainText("")
-    ui.contacts_textEdit_commentaire.setPlainText("")
     ui.contacts_combobox_sexe.setCurrentIndex(0)
+    ui.contacts_input_dernier_envoi.setText("")
+    ui.contacts_input_dernier_envoi_2.setText("")
+    ui.contacts_checkBox_a_verifier.setChecked(False)
+    ui.contacts_checkBox_reponse_positive.setChecked(False)
+    ui.contacts_checkBox_reponse_negative.setChecked(False)
+    
 
 def Tab_EnvoyerMAJLISTUPDATE():
     for value in list_contact:
@@ -269,7 +310,7 @@ if __name__ == "__main__":
     # - Chargement Configuration ou Configuration par défaut - #
 
     MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
+    ui = Ui_uiMainWindow()
     ui.setupUi(MainWindow)
 
     # - Chargement des boites de Dialogues - #
