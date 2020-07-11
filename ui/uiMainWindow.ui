@@ -52,7 +52,7 @@
       <x>-1</x>
       <y>0</y>
       <width>521</width>
-      <height>441</height>
+      <height>461</height>
      </rect>
     </property>
     <property name="tabPosition">
@@ -62,7 +62,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <property name="iconSize">
      <size>
@@ -85,170 +85,6 @@
     <property name="tabBarAutoHide">
      <bool>false</bool>
     </property>
-    <widget class="QWidget" name="tab_acceuil">
-     <attribute name="title">
-      <string>ACCUEIL</string>
-     </attribute>
-     <widget class="QLabel" name="label_19">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>20</y>
-        <width>491</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Century Gothic</family>
-        <pointsize>12</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>ACCUEIL</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="tab_envoyer">
-     <attribute name="title">
-      <string>ENVOYER</string>
-     </attribute>
-     <widget class="QPushButton" name="envoyer_btn_selectionner">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>491</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>SELECTIONNER</string>
-      </property>
-     </widget>
-     <widget class="QCheckBox" name="envoyer_checkBox_cv">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>60</y>
-        <width>191</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>CURRICULUM VITAE</string>
-      </property>
-     </widget>
-     <widget class="QCheckBox" name="envoyer_checkBox_lm">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>100</y>
-        <width>191</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>LETTRE MOTIVATION</string>
-      </property>
-     </widget>
-     <widget class="QCheckBox" name="envoyer_checkBox_formation">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>140</y>
-        <width>191</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>FEUILLET FORMATION</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="envoyer_btn_envoyer">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>370</y>
-        <width>191</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>ENVOYER</string>
-      </property>
-     </widget>
-     <widget class="QTreeWidget" name="envoyer_list">
-      <property name="geometry">
-       <rect>
-        <x>220</x>
-        <y>50</y>
-        <width>281</width>
-        <height>351</height>
-       </rect>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::Box</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Plain</enum>
-      </property>
-      <property name="lineWidth">
-       <number>2</number>
-      </property>
-      <column>
-       <property name="text">
-        <string>ENTREPRISE</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>ENVOI</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>REPONSE</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>P</string>
-       </property>
-      </column>
-     </widget>
-     <widget class="QCheckBox" name="envoyer_checkBox_tester">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>340</y>
-        <width>181</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>TESTER</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="envoyer_btn_effacer">
-      <property name="geometry">
-       <rect>
-        <x>480</x>
-        <y>50</y>
-        <width>21</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>X</string>
-      </property>
-     </widget>
-    </widget>
     <widget class="QWidget" name="tab_contacts">
      <attribute name="title">
       <string>CONTACTS</string>
@@ -387,7 +223,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>370</y>
+        <y>390</y>
         <width>231</width>
         <height>31</height>
        </rect>
@@ -421,7 +257,7 @@
        </property>
       </item>
      </widget>
-     <widget class="QPushButton" name="contacts_btn_rechercher">
+     <widget class="QPushButton" name="contacts_btn_listes">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -431,27 +267,27 @@
        </rect>
       </property>
       <property name="text">
-       <string>RECHERCHER</string>
+       <string>LISTES</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="contacts_btn_effacer">
+     <widget class="QPushButton" name="contacts_btn_nouveau">
       <property name="geometry">
        <rect>
         <x>270</x>
-        <y>370</y>
+        <y>10</y>
         <width>231</width>
         <height>31</height>
        </rect>
       </property>
       <property name="text">
-       <string>EFFACER</string>
+       <string>NOUVEAU</string>
       </property>
      </widget>
      <widget class="QPushButton" name="contacts_btn_supprimer">
       <property name="geometry">
        <rect>
         <x>270</x>
-        <y>10</y>
+        <y>390</y>
         <width>231</width>
         <height>31</height>
        </rect>
@@ -460,123 +296,13 @@
        <string>SUPPRIMER</string>
       </property>
      </widget>
-     <widget class="QLabel" name="contacts_label_dernier_envoi">
-      <property name="geometry">
-       <rect>
-        <x>270</x>
-        <y>230</y>
-        <width>231</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>DERNIER ENVOI</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="contacts_input_dernier_envoi">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>270</x>
-        <y>250</y>
-        <width>231</width>
-        <height>31</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QCheckBox" name="contacts_checkBox_a_verifier">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>230</y>
-        <width>211</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string> VERIFIER INFORMATIONS</string>
-      </property>
-     </widget>
-     <widget class="QCheckBox" name="contacts_checkBox_reponse_negative">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>270</y>
-        <width>171</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>REPONSE NEGATIVE</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="contacts_input_dernier_envoi_2">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>270</x>
-        <y>320</y>
-        <width>231</width>
-        <height>31</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="contacts_label_dernier_envoi_2">
-      <property name="geometry">
-       <rect>
-        <x>270</x>
-        <y>300</y>
-        <width>231</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>DERNIERE REPONSE</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QCheckBox" name="contacts_checkBox_reponse_positive">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>290</y>
-        <width>171</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>REPONSE POSITIVE</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="contacts_btn_visualise_reponse">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>320</y>
-        <width>211</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>VISUALISER</string>
-      </property>
-     </widget>
      <widget class="QFrame" name="frame">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>270</y>
-        <width>231</width>
-        <height>71</height>
+        <x>20</x>
+        <y>280</y>
+        <width>471</width>
+        <height>91</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -588,6 +314,58 @@
       <property name="lineWidth">
        <number>2</number>
       </property>
+      <widget class="QPushButton" name="contacts_btn_generer">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>10</y>
+         <width>211</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>GENERER</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="contacts_checkbox_cv">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>10</y>
+         <width>161</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>CURICULUM VITAE</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="contacts_checkbox_lm">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>50</y>
+         <width>171</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>LETTRE MOTIVATION</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="contacts_btn_visualiser">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>50</y>
+         <width>211</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>VISUALISER</string>
+       </property>
+      </widget>
      </widget>
      <zorder>frame</zorder>
      <zorder>contacts_input_entreprise</zorder>
@@ -602,39 +380,16 @@
      <zorder>contacts_textEdit_adresse</zorder>
      <zorder>contacts_btn_save</zorder>
      <zorder>contacts_combobox_sexe</zorder>
-     <zorder>contacts_btn_rechercher</zorder>
-     <zorder>contacts_btn_effacer</zorder>
+     <zorder>contacts_btn_listes</zorder>
+     <zorder>contacts_btn_nouveau</zorder>
      <zorder>contacts_btn_supprimer</zorder>
-     <zorder>contacts_label_dernier_envoi</zorder>
-     <zorder>contacts_input_dernier_envoi</zorder>
-     <zorder>contacts_checkBox_a_verifier</zorder>
-     <zorder>contacts_checkBox_reponse_negative</zorder>
-     <zorder>contacts_input_dernier_envoi_2</zorder>
-     <zorder>contacts_label_dernier_envoi_2</zorder>
-     <zorder>contacts_checkBox_reponse_positive</zorder>
-     <zorder>contacts_btn_visualise_reponse</zorder>
+    </widget>
+    <widget class="QWidget" name="tab_config">
+     <attribute name="title">
+      <string>CONFIG</string>
+     </attribute>
     </widget>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>517</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menu_option">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="title">
-     <string>Options</string>
-    </property>
-    <addaction name="actionAbout"/>
-   </widget>
-   <addaction name="menu_option"/>
   </widget>
   <action name="actionLocalisation_Images">
    <property name="text">
