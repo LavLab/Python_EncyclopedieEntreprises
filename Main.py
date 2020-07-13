@@ -4,6 +4,8 @@ import sys
 import shutil
 from fpdf import FPDF
 
+import pgeocode
+
 from PyQt5 import uic
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QMessageBox, QInputDialog, QLineEdit ,QTreeWidget, QTreeWidgetItem, QFileSystemModel
@@ -29,7 +31,7 @@ def f_dialogCONTACT():
     dialogCONTACT.ui.contacts_list.setColumnWidth(1,200)
     Tab_ChargerContacts()
     dialogCONTACT.show()
- 
+
 def Tab_ChargerContactsClicked():
     global list_Dialogue   
     list_Dialogue.clear()
@@ -37,10 +39,23 @@ def Tab_ChargerContactsClicked():
     for item in dialogCONTACT.ui.contacts_list.selectedIndexes():
         for value in list_contact:
             if str(value) == str(item.data()):
+                
+                try:
+                    ui.contacts_combobox_ville.clear()
+                    geocode = pgeocode.Nominatim('fr')
+                    code_postal = geocode.query_postal_code(str(list_contact[value].c_codepostal))
+                    villes = code_postal.place_name.split(", ")
+                    for ville in villes:  
+                        ui.contacts_combobox_ville.addItem(ville)
+                except Exception as identifier:
+                    pass
+                
                 ui.contacts_input_entreprise.setText(str(list_contact[value].c_entreprise).upper())
                 ui.contacts_combobox_sexe.setCurrentIndex(int(list_contact[value].c_sexe))                
                 ui.contacts_input_contact.setText(str(list_contact[value].c_contact))
                 ui.contacts_textEdit_adresse.setPlainText(str(list_contact[value].c_adresse))
+                ui.contacts_input_codepostal.setValue(int(list_contact[value].c_codepostal))
+                ui.contacts_combobox_ville.setCurrentIndex(int(list_contact[value].c_ville))
                 ui.contacts_input_mail.setText(str(list_contact[value].c_mail))
                 ui.contacts_input_telephone.setText(str(list_contact[value].c_telephone))
                 
@@ -70,48 +85,71 @@ def Tab_ChargerList():
         data = json.load(json_file)
     for key, value in data.items():
         for item in value:
-            list_contact[str(item['ENTREPRISE'])]=cls_Contact(str(item['ENTREPRISE']),int(item['SEXE']),str(item['CONTACT']),str(item['ADRESSE']),str(item['MAIL']),str(item['TELEPHONE']))
+            try:
+                geocode = pgeocode.Nominatim('fr')
+                code_postal = geocode.query_postal_code(str(item['CP']))
+                villes = code_postal.place_name.split(", ")
+            except Exception as identifier:
+                pass
+            
+            list_contact[str(item['ENTREPRISE'])]=cls_Contact(str(item['ENTREPRISE']),int(item['SEXE']),str(item['CONTACT']),str(item['ADRESSE']),int(item['CP']),int(item['VILLE']),str(villes[int(item['VILLE'])]),str(item['MAIL']),str(item['TELEPHONE']))
     return list_contact
 
 
 def Tab_ChargerContacts():
     global list_contact
     dialogCONTACT.ui.contacts_btn_selectionner.clicked.connect(Tab_ChargerContactsClicked)
-                                     
-    for value in list_contact:
-        dialogCONTACT.ui.contacts_list.addTopLevelItem(QTreeWidgetItem([str(list_contact[value].c_entreprise),str(list_contact[value].c_adresse),str(list_contact[value].c_contact)]))
-        dialogCONTACT.setWindowTitle("Liste des Contacts : "+str(len(list_contact)))
+    
+    try:                             
+        for value in list_contact:                
+            dialogCONTACT.ui.contacts_list.addTopLevelItem(QTreeWidgetItem([str(list_contact[value].c_entreprise),str(list_contact[value].c_adresse)+"\n"+str(list_contact[value].c_codepostal)+", "+str(list_contact[value].c_ville_name)]))
+            dialogCONTACT.setWindowTitle("Liste des Contacts : "+str(len(list_contact)))
+            
+    except Exception as error:
+        QMessageBox.setIcon(QMessageBox.Information)
+        QMessageBox.setText("Une erreur est survenue !")
+        QMessageBox.setDetailedText(str(error))
+        QMessageBox.exec_()
         
 def Tab_SauvegarderContacts():
     global list_contact
     
     if not ui.contacts_input_entreprise.text() == (""):
-        a_dictionary = {
-            str(ui.contacts_input_entreprise.text()):[
-                {"ENTREPRISE":str(ui.contacts_input_entreprise.text()).upper(),
-                "SEXE":int(ui.contacts_combobox_sexe.currentIndex()),
-                "CONTACT":str(ui.contacts_input_contact.text()),
-                "ADRESSE":str(ui.contacts_textEdit_adresse.toPlainText()),
-                "MAIL":str(ui.contacts_input_mail.text()),
-                "TELEPHONE":str(ui.contacts_input_telephone.text())
-                }
-            ]
-        }
-        
-        with open("./ressources/Entreprises.json", "r+", encoding="utf-8") as file:
-            data = json.load(file)
-            data.update(a_dictionary)
-            file.seek(0)
-            json.dump(data, file)
+        try:
+            a_dictionary = {
+                str(ui.contacts_input_entreprise.text()):[
+                    {
+                    "ENTREPRISE":str(ui.contacts_input_entreprise.text()).upper(),
+                    "SEXE":int(ui.contacts_combobox_sexe.currentIndex()),
+                    "CONTACT":str(ui.contacts_input_contact.text()),
+                    "ADRESSE":str(ui.contacts_textEdit_adresse.toPlainText()),
+                    "CP":int(ui.contacts_input_codepostal.value()),
+                    "VILLE":int(ui.contacts_combobox_ville.currentIndex()),
+                    "MAIL":str(ui.contacts_input_mail.text()),
+                    "TELEPHONE":str(ui.contacts_input_telephone.text())
+                    }
+                ]
+            }
             
-        Tab_ContactEffacer()
-        
-        list_contact=Tab_ChargerList()
-        
-        QMessageBox.setIcon(QMessageBox.Information)
-        QMessageBox.setText("Nouveau contact enregistré")
-        QMessageBox.setDetailedText("")
-        QMessageBox.exec_()
+            with open("./ressources/Entreprises.json", "r+", encoding="utf-8") as file:
+                data = json.load(file)
+                data.update(a_dictionary)
+                # file.seek(0)
+                # json.dump(data, file)
+                
+            Tab_ContactEffacer()
+            
+            list_contact=Tab_ChargerList()
+            
+            QMessageBox.setIcon(QMessageBox.Information)
+            QMessageBox.setText("Modifications enregistrées")
+            QMessageBox.setDetailedText("")
+            QMessageBox.exec_()
+        except Exception as error:
+            QMessageBox.setIcon(QMessageBox.Information)
+            QMessageBox.setText("Une erreur est survenue !")
+            QMessageBox.setDetailedText(str(error))
+            QMessageBox.exec_()
     else:
         QMessageBox.setIcon(QMessageBox.Information)
         QMessageBox.setText("Veuillez saisir des informations")
@@ -123,6 +161,9 @@ def Tab_ContactEffacer():
         ui.contacts_input_entreprise.setText("")                
         ui.contacts_input_contact.setText("")
         ui.contacts_textEdit_adresse.setPlainText("")
+        ui.contacts_input_codepostal.setValue(00000)
+        ui.contacts_combobox_ville.setCurrentIndex(0)
+        ui.contacts_combobox_ville.clear()
         ui.contacts_input_entreprise.setText("")
         ui.contacts_input_mail.setText("")
         ui.contacts_input_telephone.setText("")
@@ -156,17 +197,27 @@ def Tab_ContactSupprimer():
 
     Tab_ContactEffacer()
     
-    with open("./ressources/Entreprises.json", "w") as data_file:
-                json.dump({}, data_file)
-    
     for item in dialogCONTACT.ui.contacts_list.selectedIndexes():
         for value in list_contact:
             if str(value) == str(item.data()):
                 del list_contact[str(value)]
                 break
-
-            a_dictionary = {str(list_contact[value].c_entreprise):[{"ENTREPRISE":str(list_contact[value].c_entreprise).upper(),"SEXE":int(list_contact[value].c_sexe),"CONTACT":str(list_contact[value].c_contact),"ADRESSE":str(list_contact[value].c_adresse),"MAIL":str(list_contact[value].c_mail),"TELEPHONE":str(list_contact[value].c_telephone)}]}            
-
+            
+            a_dictionary = {
+                str(ui.contacts_input_entreprise.text()):[
+                    {
+                    "ENTREPRISE":str(ui.contacts_input_entreprise.text()).upper(),
+                    "SEXE":int(ui.contacts_combobox_sexe.currentIndex()),
+                    "CONTACT":str(ui.contacts_input_contact.text()),
+                    "ADRESSE":str(ui.contacts_textEdit_adresse.toPlainText()),
+                    "CP":int(ui.contacts_input_codepostal.value()),
+                    "VILLE":int(ui.contacts_combobox_ville.currentIndex()),
+                    "MAIL":str(ui.contacts_input_mail.text()),
+                    "TELEPHONE":str(ui.contacts_input_telephone.text())
+                    }
+                ]
+            }
+            
             with open("./ressources/Entreprises.json", "r+", encoding="utf-8") as file:
                 data = json.load(file)
                 data.update(a_dictionary)
@@ -174,6 +225,18 @@ def Tab_ContactSupprimer():
                 json.dump(data, file)
                 
     list_Dialogue.clear()
+
+def Tab_CodePostal():
+    
+    try:
+        ui.contacts_combobox_ville.clear()
+        geocode = pgeocode.Nominatim('fr')
+        code_postal = geocode.query_postal_code(str(ui.contacts_input_codepostal.value()))
+        villes = code_postal.place_name.split(", ")
+        for ville in villes:  
+            ui.contacts_combobox_ville.addItem(ville)
+    except Exception as identifier:
+        pass
 
 def Tab_ContactVisualiser():
     pass
@@ -217,12 +280,14 @@ def Tab_Contacts():
     ui.contacts_btn_supprimer.clicked.connect(Tab_ContactSupprimer)
     ui.contacts_btn_visualiser.clicked.connect(Tab_ContactVisualiser)
     ui.contacts_btn_generer.clicked.connect(Tab_ContactGenerer)
+    ui.contacts_input_codepostal.valueChanged.connect(Tab_CodePostal)
         
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
 
     # - Chargement Configuration ou Configuration par défaut - #
-
+    nomi = pgeocode.Nominatim('fr')
+    
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_uiMainWindow()
     ui.setupUi(MainWindow)
